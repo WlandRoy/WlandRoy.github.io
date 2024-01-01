@@ -1,0 +1,80 @@
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content=""/><meta name="keyword"/><title>Roy blog
+-
+
+</title><link rel="icon" href="/img/favicon.ico"/>
+<link rel="stylesheet" href="/css/style.css">
+
+<link rel="stylesheet" href="/css/helpers.css">
+
+<script src="/js/clipboard/clipboard.min.js"></script>
+
+
+<script src="/js/bootstrap.js"></script>
+
+<script async="async" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 7.0.0"></head><body><div class="loading-wrapper" data-loading="data-loading"><div class="loading"><span></span><span></span><span></span></div></div><div class="page" data-filter="data-filter"><div class="head" data-show="data-show"><header class="head-header"><div class="head-author"><a class="head-author-link" href="/">Roy blog</a></div><div class="head-right"><button class="bar-wrap" id="bar-wrap-toggle"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button><div class="head-item"><a class="search-button head-item-link"><span>Search</span>
+<i class="icon icon-search"></i></a></div><div class="head-item"></div></div></header>
+<div class="menubar-head" id="menubar"><ul class="menubar-ul"><li class="menubar-item" data-border="data-border"></li><li class="menubar-item"><i class="icon icon-archive"></i>
+<a class="menubar-link" href="/archives">Archives</a></li></ul><div class="menu-search-box search-button"><div>Search</div>
+<i class="icon icon-search"></i></div></div></div><div class="main" data-page="post"><article class="post" id="post"><header class="post-head"><h1 class="post-title"><a class="title" href="/2024/01/01/Swift%E5%B8%B8%E9%87%8F%E5%8F%98%E9%87%8F%E5%B0%8F%E8%AE%B0/">Swift常量变量小记</a></h1></header><div class="post-meta"><div class="post-date"><time class="post-time" itemprop="datePublished" title="2024-01-01 18:08:49" datetime="2024-01-01T10:08:49.000Z">2024-01-01</time></div>|
+<div class="post-tag"></div>|
+<div class="post-visit"><span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span>hits</span></div></div><div class="post-info"><div class="post-word-count">This article contains 205 words.</div>
+</div><div class="article-entry" itemprop="articleBody"><h3 id="var-变量"><a href="#var-变量" class="headerlink" title="var 变量"></a>var 变量</h3><ul>
+<li>声明一个变量<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var value = 0</span><br></pre></td></tr></table></figure></li>
+<li>变量的值可以改变<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value = 1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>变量只能改变同一种类型的值,不能修改为其他类型的值,如下如果value改为字符串就会报错</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value = &quot;字符&quot; // 报错</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="let-常量"><a href="#let-常量" class="headerlink" title="let 常量"></a>let 常量</h3><ul>
+<li>声明一个常量<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let constValue = 10</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>常量一旦赋值就不能改变,否则会改变</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">constValue = 2 // 报错</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="常量变量的几种声明方式"><a href="#常量变量的几种声明方式" class="headerlink" title="常量变量的几种声明方式"></a>常量变量的几种声明方式</h3><ul>
+<li>默认值<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var value = 10</span><br><span class="line">let constValue = 20</span><br></pre></td></tr></table></figure></li>
+<li>也可以先定义类型然后在赋值<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var x:Int,y:Double,z:String</span><br><span class="line">let eror:String,constValue:Int</span><br><span class="line">x = 10</span><br><span class="line">y = 2.0</span><br><span class="line">z = &quot;z&quot;</span><br><span class="line">eror = &quot;error&quot;</span><br><span class="line">constValue = 10</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="e-可以表示10几次方"><a href="#e-可以表示10几次方" class="headerlink" title="e 可以表示10几次方"></a>e 可以表示10几次方</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var value = 1.28175e2</span><br><span class="line">print(value) // 128.175</span><br></pre></td></tr></table></figure>
+<h3 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var three = 3</span><br><span class="line">var threeDouble = Double(three)</span><br><span class="line">print(threeDouble) // 3.0</span><br><span class="line">var PI = 3.1415</span><br><span class="line">var p:Int = Int(PI)</span><br><span class="line">print(p) // 3</span><br></pre></td></tr></table></figure>
+<h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">typealias Age = Int</span><br><span class="line">var age:Age = 10</span><br><span class="line">print(age) // 10</span><br></pre></td></tr></table></figure>
+</div></article><aside class="post-widget"><h4>In this article</h4><nav class="post-toc-wrap" id="post-toc"><ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#var-%E5%8F%98%E9%87%8F"><span class="post-toc-number">1.</span> <span class="post-toc-text">var 变量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#let-%E5%B8%B8%E9%87%8F"><span class="post-toc-number">2.</span> <span class="post-toc-text">let 常量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%B8%B8%E9%87%8F%E5%8F%98%E9%87%8F%E7%9A%84%E5%87%A0%E7%A7%8D%E5%A3%B0%E6%98%8E%E6%96%B9%E5%BC%8F"><span class="post-toc-number">3.</span> <span class="post-toc-text">常量变量的几种声明方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#e-%E5%8F%AF%E4%BB%A5%E8%A1%A8%E7%A4%BA10%E5%87%A0%E6%AC%A1%E6%96%B9"><span class="post-toc-number">4.</span> <span class="post-toc-text">e 可以表示10几次方</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="post-toc-number">5.</span> <span class="post-toc-text">类型转换</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D"><span class="post-toc-number">6.</span> <span class="post-toc-text">类型别名</span></a></li></ol></nav></aside></div><footer class="footer-nav"><div class="footer"><div class="back-top" id="back-top" title="Back to top"><i class="icon icon-chevron-bar-up"></i></div><div class="footer-content"><div><span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv">?</span>
+PV
+</span><span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv">?</span>
+UV</span></div>
+
+Copyright &copy;
+2020<span class="time-divide">-</span>2024
+Roy.
+
+Power by
+<a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>
+and
+<a href="https://github.com/Cerallin/hexo-theme-yuzu" target="_blank" rel="external nofollow" title="v3.2.3">Theme Yuzu</a>.</div></div></footer>
+<script>window.config = {
+  url_root: '/',
+  meta_path: 'meta.json',
+};
+</script>
+<script src="/js/theme/back-to-top.js"></script>
+
+
+<script src="/js/theme/clipboard.js"></script>
+
+
+<script src="/js/theme/loading.js"></script>
+
+
+<script src="/js/theme/navbar.js"></script>
+
+<script src="/js/theme/search.js"></script>
+
+<script src="/js/theme/toc.js"></script>
+<script>window.onload = function () {
+  for (const moduleName in Theme) {
+    const module = Theme[moduleName];
+    module.register();
+  }
+};</script></div><div class="search-modal" id="search-modal"><div class="card"><div class="card-head"><div class="search-box"><input class="search-input" id="search-input" placeholder="search"/><div class="search-button" id="search-button"><div class="icon icon-search"></div></div></div><div class="close-button"><div class="icon icon-x"></div></div></div><div class="card-body"><div class="search-count">search.total<span id="search-count-num">0</span>search result(s) in total.</div><div class="search-result" id="search-result"></div></div></div></div></body></html>
