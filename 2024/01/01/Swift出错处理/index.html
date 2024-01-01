@@ -1,0 +1,73 @@
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content=""/><meta name="keyword"/><title>Roy blog
+-
+
+</title><link rel="icon" href="/img/favicon.ico"/>
+<link rel="stylesheet" href="/css/style.css">
+
+<link rel="stylesheet" href="/css/helpers.css">
+
+<script src="/js/clipboard/clipboard.min.js"></script>
+
+
+<script src="/js/bootstrap.js"></script>
+
+<script async="async" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 7.0.0"></head><body><div class="loading-wrapper" data-loading="data-loading"><div class="loading"><span></span><span></span><span></span></div></div><div class="page" data-filter="data-filter"><div class="head" data-show="data-show"><header class="head-header"><div class="head-author"><a class="head-author-link" href="/">Roy blog</a></div><div class="head-right"><button class="bar-wrap" id="bar-wrap-toggle"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button><div class="head-item"><a class="search-button head-item-link"><span>搜索</span>
+<i class="icon icon-search"></i></a></div><div class="head-item"></div></div></header>
+<div class="menubar-head" id="menubar"><ul class="menubar-ul"><li class="menubar-item" data-border="data-border"></li><li class="menubar-item"><i class="icon icon-archive"></i>
+<a class="menubar-link" href="/archives">Archives</a></li></ul><div class="menu-search-box search-button"><div>搜索</div>
+<i class="icon icon-search"></i></div></div></div><div class="main" data-page="post"><article class="post" id="post"><header class="post-head"><h1 class="post-title"><a class="title" href="/2024/01/01/Swift%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86/">Swift出错处理</a></h1></header><div class="post-meta"><div class="post-date"><time class="post-time" itemprop="datePublished" title="2024-01-01 18:48:58" datetime="2024-01-01T10:48:58.000Z">2024-01-01</time></div>|
+<div class="post-tag"></div>|
+<div class="post-visit"><span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span>访问</span></div></div><div class="post-info"><div class="post-word-count">本文共332字。</div>
+</div><div class="article-entry" itemprop="articleBody"><ul>
+<li><p>定义自动售货机错误处理 定义一个枚举 遵循Error协议</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">enum VendingMachineError:Error &#123;</span><br><span class="line">    case invalidSelection // 无效的选择</span><br><span class="line">    case insufficientFunds(coinsNeeded:Int) // 金额不足</span><br><span class="line">    case outOfStock // 缺货</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定义商品模型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct Item &#123;</span><br><span class="line">    var price:Int</span><br><span class="line">    var count:Int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定义一个自动售货机</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class VendingMachine &#123;</span><br><span class="line">    var inventory = [</span><br><span class="line">        &quot;Candy Bar&quot;:Item(price: 12, count: 7),</span><br><span class="line">        &quot;Chips&quot;: Item(price: 10, count: 4),</span><br><span class="line">        &quot;Pretzels&quot;: Item(price: 7, count: 11)</span><br><span class="line">    ]</span><br><span class="line">    </span><br><span class="line">    var coinsDeposited = 0</span><br><span class="line">    </span><br><span class="line">    func vend(itemNamed:String) throws &#123;</span><br><span class="line">        // 需要的商品名称没有找到则是无效商品</span><br><span class="line">        guard let item = inventory[itemNamed] else &#123;</span><br><span class="line">            throw VendingMachineError.invalidSelection</span><br><span class="line">        &#125;</span><br><span class="line">        // 商品的数量判断</span><br><span class="line">        guard item.count &gt; 0 else &#123;</span><br><span class="line">            throw VendingMachineError.outOfStock</span><br><span class="line">        &#125;</span><br><span class="line">        // 商品还需要多少硬币</span><br><span class="line">        guard item.price &lt; coinsDeposited else &#123;</span><br><span class="line">            throw VendingMachineError.insufficientFunds(coinsNeeded: (item.price - coinsDeposited))</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        print(&quot;售出&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>如下用法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var vendingMachine = VendingMachine()</span><br><span class="line">vendingMachine.coinsDeposited = 8</span><br><span class="line">do &#123;</span><br><span class="line">    try vendingMachine.vend(itemNamed: &quot;Chips&quot;)</span><br><span class="line">&#125; catch VendingMachineError.invalidSelection &#123;</span><br><span class="line">    print(&quot;没有找到对应的商品&quot;)</span><br><span class="line">&#125; catch VendingMachineError.insufficientFunds(coinsNeeded: let coinsNeeded) &#123;</span><br><span class="line">    print(&quot;需要\(coinsNeeded)硬币&quot;)</span><br><span class="line">&#125; catch VendingMachineError.outOfStock &#123;</span><br><span class="line">    print(&quot;缺货&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义错误类型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 自动售货机自定义错误信息</span><br><span class="line">extension VendingMachineError:LocalizedError &#123;</span><br><span class="line">    var errorDescription: String? &#123;</span><br><span class="line">        switch self &#123;</span><br><span class="line">        case .invalidSelection:</span><br><span class="line">            return &quot;无效的选择&quot;</span><br><span class="line">        case .insufficientFunds(coinsNeeded: let coinsNeeded):</span><br><span class="line">            return &quot;还缺少\(coinsNeeded)硬币&quot;</span><br><span class="line">        case .outOfStock:</span><br><span class="line">            return &quot;缺货&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>用法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">do &#123;</span><br><span class="line">    try vendingMachine.vend(itemNamed: &quot;Chips&quot;)</span><br><span class="line">&#125; catch &#123;</span><br><span class="line">    print(error.localizedDescription)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</div></article></div><footer class="footer-nav"><div class="footer"><div class="back-top" id="back-top" title="Back to top"><i class="icon icon-chevron-bar-up"></i></div><div class="footer-content"><div><span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv">?</span>
+PV
+</span><span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv">?</span>
+UV</span></div>
+
+Copyright &copy;
+2020<span class="time-divide">-</span>2024
+Roy.
+
+Power by
+<a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>
+and
+<a href="https://github.com/Cerallin/hexo-theme-yuzu" target="_blank" rel="external nofollow" title="v3.2.3">Theme Yuzu</a>.</div></div></footer>
+<script>window.config = {
+  url_root: '/',
+  meta_path: 'meta.json',
+};
+</script>
+<script src="/js/theme/back-to-top.js"></script>
+
+
+<script src="/js/theme/clipboard.js"></script>
+
+
+<script src="/js/theme/loading.js"></script>
+
+
+<script src="/js/theme/navbar.js"></script>
+
+<script src="/js/theme/search.js"></script>
+
+<script src="/js/theme/toc.js"></script>
+<script>window.onload = function () {
+  for (const moduleName in Theme) {
+    const module = Theme[moduleName];
+    module.register();
+  }
+};</script></div><div class="search-modal" id="search-modal"><div class="card"><div class="card-head"><div class="search-box"><input class="search-input" id="search-input" placeholder="搜索"/><div class="search-button" id="search-button"><div class="icon icon-search"></div></div></div><div class="close-button"><div class="icon icon-x"></div></div></div><div class="card-body"><div class="search-count">共<span id="search-count-num">0</span>条搜索结果。</div><div class="search-result" id="search-result"></div></div></div></div></body></html>

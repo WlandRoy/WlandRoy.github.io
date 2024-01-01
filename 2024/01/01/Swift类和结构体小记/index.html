@@ -1,0 +1,81 @@
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content=""/><meta name="keyword"/><title>Roy blog
+-
+
+</title><link rel="icon" href="/img/favicon.ico"/>
+<link rel="stylesheet" href="/css/style.css">
+
+<link rel="stylesheet" href="/css/helpers.css">
+
+<script src="/js/clipboard/clipboard.min.js"></script>
+
+
+<script src="/js/bootstrap.js"></script>
+
+<script async="async" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 7.0.0"></head><body><div class="loading-wrapper" data-loading="data-loading"><div class="loading"><span></span><span></span><span></span></div></div><div class="page" data-filter="data-filter"><div class="head" data-show="data-show"><header class="head-header"><div class="head-author"><a class="head-author-link" href="/">Roy blog</a></div><div class="head-right"><button class="bar-wrap" id="bar-wrap-toggle"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button><div class="head-item"><a class="search-button head-item-link"><span>搜索</span>
+<i class="icon icon-search"></i></a></div><div class="head-item"></div></div></header>
+<div class="menubar-head" id="menubar"><ul class="menubar-ul"><li class="menubar-item" data-border="data-border"></li><li class="menubar-item"><i class="icon icon-archive"></i>
+<a class="menubar-link" href="/archives">Archives</a></li></ul><div class="menu-search-box search-button"><div>搜索</div>
+<i class="icon icon-search"></i></div></div></div><div class="main" data-page="post"><article class="post" id="post"><header class="post-head"><h1 class="post-title"><a class="title" href="/2024/01/01/Swift%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93%E5%B0%8F%E8%AE%B0/">Swift类和结构体小记</a></h1></header><div class="post-meta"><div class="post-date"><time class="post-time" itemprop="datePublished" title="2024-01-01 18:45:44" datetime="2024-01-01T10:45:44.000Z">2024-01-01</time></div>|
+<div class="post-tag"></div>|
+<div class="post-visit"><span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span>访问</span></div></div><div class="post-info"><div class="post-word-count">本文共381字。</div>
+</div><div class="article-entry" itemprop="articleBody"><h3 id="定义如下一个分辨率的结构体"><a href="#定义如下一个分辨率的结构体" class="headerlink" title="定义如下一个分辨率的结构体"></a>定义如下一个分辨率的结构体</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct Resolution &#123;</span><br><span class="line">    var width = 0</span><br><span class="line">    var height = 0</span><br><span class="line">&#125;</span><br><span class="line">var hd = Resolution(width: 1920,height: 1080)</span><br><span class="line">var cinema = hd</span><br><span class="line">cinema.width = 2048</span><br><span class="line">print(hd.width) // 1920</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面打印没变2048 , 在swift中结构体(Struct)和枚举(enum)都是值类型,当cinema&#x3D;hd时两个结构体都是引用同一块内存的值,但当cinema赋予新值时,俩结构体才引用不同内存的值<br>(官方文档说明)[<a target="_blank" rel="noopener" href="https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/]">https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures/]</a></p>
+</blockquote>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><ul>
+<li><p>定义一个类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class VideoMode &#123;</span><br><span class="line">    var resolution = Resolution()</span><br><span class="line">    var interlaced = false</span><br><span class="line">    var frameRate = 0.0</span><br><span class="line">    var name:String?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var hd = Resolution(width: 1920,height: 1080)</span><br><span class="line"></span><br><span class="line">let tenEighty = VideoMode()</span><br><span class="line">tenEighty.resolution = hd</span><br><span class="line">tenEighty.interlaced = true</span><br><span class="line">tenEighty.name = &quot;1080i&quot;</span><br><span class="line">tenEighty.frameRate = 25.0</span><br><span class="line"></span><br><span class="line">let alsoTenEighty = tenEighty</span><br><span class="line">alsoTenEighty.frameRate = 30.0</span><br><span class="line">print(tenEighty.frameRate) // 30.0</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通过打印发现tenEighty.frameRate的值变了,swift中类就是引用类型,并不是值复制</p>
+</blockquote>
+</li>
+<li><p>通过 &#x3D;&#x3D;&#x3D; 可以判断两个对象是否是引用同一块地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">let tenEighty = VideoMode()</span><br><span class="line">tenEighty.resolution = hd</span><br><span class="line">tenEighty.interlaced = true</span><br><span class="line">tenEighty.name = &quot;1080i&quot;</span><br><span class="line">tenEighty.frameRate = 25.0</span><br><span class="line"></span><br><span class="line">let alsoTenEighty = tenEighty</span><br><span class="line">alsoTenEighty.frameRate = 30.0</span><br><span class="line">print(tenEighty.frameRate) // 30.0</span><br><span class="line"></span><br><span class="line">if tenEighty === alsoTenEighty &#123;</span><br><span class="line">    print(&quot;两个VideoMode相等&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 两个VideoMode相等</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如上 两个对象都是指向同同一块内存因此是相等的</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">let tenEighty = VideoMode()</span><br><span class="line">tenEighty.resolution = hd</span><br><span class="line">tenEighty.interlaced = true</span><br><span class="line">tenEighty.name = &quot;1080i&quot;</span><br><span class="line">tenEighty.frameRate = 25.0</span><br><span class="line"></span><br><span class="line">let alsoTenEighty = VideoMode()</span><br><span class="line">tenEighty.resolution = hd</span><br><span class="line">tenEighty.interlaced = true</span><br><span class="line">tenEighty.name = &quot;1080i&quot;</span><br><span class="line">tenEighty.frameRate = 25.0</span><br><span class="line"></span><br><span class="line">if tenEighty === alsoTenEighty &#123;</span><br><span class="line">    print(&quot;两个VideoMode相等&quot;)</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    print(&quot;两个VideoMode不相等&quot;)</span><br><span class="line">&#125;</span><br><span class="line">// 两个VideoMode不相等</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>虽然两个对象值都是一样,但是初始化在不同内存因此两个对象不相等</p>
+</blockquote>
+</div></article><aside class="post-widget"><h4>目录</h4><nav class="post-toc-wrap" id="post-toc"><ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%AE%9A%E4%B9%89%E5%A6%82%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%88%86%E8%BE%A8%E7%8E%87%E7%9A%84%E7%BB%93%E6%9E%84%E4%BD%93"><span class="post-toc-number">1.</span> <span class="post-toc-text">定义如下一个分辨率的结构体</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E7%B1%BB"><span class="post-toc-number">2.</span> <span class="post-toc-text">类</span></a></li></ol></nav></aside></div><footer class="footer-nav"><div class="footer"><div class="back-top" id="back-top" title="Back to top"><i class="icon icon-chevron-bar-up"></i></div><div class="footer-content"><div><span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv">?</span>
+PV
+</span><span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv">?</span>
+UV</span></div>
+
+Copyright &copy;
+2020<span class="time-divide">-</span>2024
+Roy.
+
+Power by
+<a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>
+and
+<a href="https://github.com/Cerallin/hexo-theme-yuzu" target="_blank" rel="external nofollow" title="v3.2.3">Theme Yuzu</a>.</div></div></footer>
+<script>window.config = {
+  url_root: '/',
+  meta_path: 'meta.json',
+};
+</script>
+<script src="/js/theme/back-to-top.js"></script>
+
+
+<script src="/js/theme/clipboard.js"></script>
+
+
+<script src="/js/theme/loading.js"></script>
+
+
+<script src="/js/theme/navbar.js"></script>
+
+<script src="/js/theme/search.js"></script>
+
+<script src="/js/theme/toc.js"></script>
+<script>window.onload = function () {
+  for (const moduleName in Theme) {
+    const module = Theme[moduleName];
+    module.register();
+  }
+};</script></div><div class="search-modal" id="search-modal"><div class="card"><div class="card-head"><div class="search-box"><input class="search-input" id="search-input" placeholder="搜索"/><div class="search-button" id="search-button"><div class="icon icon-search"></div></div></div><div class="close-button"><div class="icon icon-x"></div></div></div><div class="card-body"><div class="search-count">共<span id="search-count-num">0</span>条搜索结果。</div><div class="search-result" id="search-result"></div></div></div></div></body></html>
