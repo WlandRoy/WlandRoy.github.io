@@ -145,6 +145,240 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/04/Swift-Codable-Json%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Roy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roy blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/04/Swift-Codable-Json%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">Swift Codable Json解析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-01-04 21:47:47 / 修改时间：21:47:54" itemprop="dateCreated datePublished" datetime="2024-01-04T21:47:47+08:00">2024-01-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="swift-json-编解码"><a href="#swift-json-编解码" class="headerlink" title="swift json 编解码"></a>swift json 编解码</h3><blockquote>
+<p>(官方链接)[<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/foundation/archives_and_serialization/using_json_with_custom_types]">https://developer.apple.com/documentation/foundation/archives_and_serialization/using_json_with_custom_types]</a></p>
+</blockquote>
+<h6 id="简单的解码"><a href="#简单的解码" class="headerlink" title="简单的解码"></a>简单的解码</h6><ul>
+<li>如下一个json格式字符串<pre><code class="highlight plaintext">let json = &quot;&quot;&quot;
+&#123;
+    &quot;name&quot; : &quot;Banana&quot;,
+    &quot;points&quot; : 200,
+&#125;
+&quot;&quot;&quot;</code></pre></li>
+<li>定义结构体<pre><code class="highlight plaintext">struct Product:Codable &#123;
+    var name:String
+    var points:Int
+&#125;</code></pre></li>
+<li>解码<pre><code class="highlight plaintext">guard let data = json.data(using: .utf8) else &#123; fatalError(&quot;字符串转data失败&quot;) &#125;
+let decoder = try JSONDecoder().decode(Product.self, from: data)
+print(decoder) // Product(name: &quot;Banana&quot;, points: 200)</code></pre></li>
+</ul>
+<h6 id="有时候json是一个数组-有的元素对应字段没有如下"><a href="#有时候json是一个数组-有的元素对应字段没有如下" class="headerlink" title="有时候json是一个数组,有的元素对应字段没有如下"></a>有时候json是一个数组,有的元素对应字段没有如下</h6><pre><code class="highlight plaintext">let json = &quot;&quot;&quot;
+[
+    &#123;
+        &quot;name&quot;: &quot;Banana&quot;,
+        &quot;points&quot;: 200,
+        &quot;description&quot;: &quot;A banana grown in Ecuador.&quot;
+    &#125;,
+    &#123;
+        &quot;name&quot;: &quot;Orange&quot;,
+        &quot;points&quot;: 100
+    &#125;
+]
+&quot;&quot;&quot;</code></pre>
+<ul>
+<li>对应结构体<pre><code class="highlight plaintext">struct Product:Codable &#123;
+    var name:String
+    var points:Int
+    var description:String?
+&#125;</code></pre></li>
+<li>解码<pre><code class="highlight plaintext">guard let data = json.data(using: .utf8) else &#123; fatalError(&quot;字符串转data失败&quot;) &#125;
+let decoder = try JSONDecoder().decode([Product].self, from: data)
+
+print(decoder) // [Product(name: &quot;Banana&quot;, points: 200, description: Optional(&quot;A banana grown in Ecuador.&quot;)), Product(name: &quot;Orange&quot;, points: 100, description: nil)]</code></pre></li>
+</ul>
+<h6 id="有时json有字段但是为null"><a href="#有时json有字段但是为null" class="headerlink" title="有时json有字段但是为null"></a>有时json有字段但是为null</h6><pre><code class="highlight plaintext">let json = &quot;&quot;&quot;
+&#123;
+    &quot;name&quot; : null,
+    &quot;points&quot; : null,
+&#125;
+&quot;&quot;&quot;
+
+struct Product:Codable &#123;
+    var name:String?
+    var points:Int?
+&#125;
+
+guard let data = json.data(using: .utf8) else &#123; fatalError(&quot;字符串转data失败&quot;) &#125;
+let decoder = try JSONDecoder().decode(Product.self, from: data)
+print(decoder) // Product(name: nil, points: nil)</code></pre>
+
+<h6 id="有时json的字段我们不需要或者想换一个字段表示这是就需要转换一下了"><a href="#有时json的字段我们不需要或者想换一个字段表示这是就需要转换一下了" class="headerlink" title="有时json的字段我们不需要或者想换一个字段表示这是就需要转换一下了"></a>有时json的字段我们不需要或者想换一个字段表示这是就需要转换一下了</h6><pre><code class="highlight plaintext">let json = &quot;&quot;&quot;
+[
+    &#123;
+        &quot;product_name&quot;: &quot;Bananas&quot;,
+        &quot;product_cost&quot;: 200,
+        &quot;description&quot;: &quot;A banana grown in Ecuador.&quot;
+    &#125;,
+    &#123;
+        &quot;product_name&quot;: &quot;Oranges&quot;,
+        &quot;product_cost&quot;: 100,
+        &quot;description&quot;: &quot;A juicy orange.&quot;
+    &#125;
+]
+&quot;&quot;&quot;</code></pre>
+<ul>
+<li>结构体<blockquote>
+<p>每个声明的字段必须加上哪怕不需要转换 CodingKeys也是固定写死的格式</p>
+</blockquote>
+<pre><code class="highlight plaintext">struct Product:Codable &#123;
+    var productName:String
+    var points:Int
+    var description:String
+    
+    // 每个声明的字段必须加上哪怕不需要转换
+    private enum CodingKeys:String,CodingKey &#123;
+        case productName = &quot;product_name&quot;
+        case points = &quot;product_cost&quot;
+        case description = &quot;description&quot;
+    &#125;
+&#125;</code></pre></li>
+<li>解码<pre><code class="highlight plaintext">guard let data = json.data(using: .utf8) else &#123; fatalError(&quot;字符串转data失败&quot;) &#125;
+let decoder = try JSONDecoder().decode([Product].self, from: data)
+print(decoder)</code></pre></li>
+</ul>
+<h6 id="嵌套类型如下"><a href="#嵌套类型如下" class="headerlink" title="嵌套类型如下"></a>嵌套类型如下</h6><pre><code class="highlight plaintext">let json = &quot;&quot;&quot;
+[
+    &#123;
+        &quot;name&quot;: &quot;Home Town Market&quot;,
+        &quot;aisles&quot;: [
+            &#123;
+                &quot;name&quot;: &quot;Produce&quot;,
+                &quot;shelves&quot;: [
+                    &#123;
+                        &quot;name&quot;: &quot;Discount Produce&quot;,
+                        &quot;product&quot;: &#123;
+                            &quot;name&quot;: &quot;Banana&quot;,
+                            &quot;points&quot;: 200,
+                            &quot;description&quot;: &quot;A banana that&#x27;s perfectly ripe.&quot;
+                        &#125;
+                    &#125;
+                ]
+            &#125;
+        ]
+    &#125;,
+    &#123;
+        &quot;name&quot;: &quot;Big City Market&quot;,
+        &quot;aisles&quot;: [
+            &#123;
+                &quot;name&quot;: &quot;Sale Aisle&quot;,
+                &quot;shelves&quot;: [
+                    &#123;
+                        &quot;name&quot;: &quot;Seasonal Sale&quot;,
+                        &quot;product&quot;: &#123;
+                            &quot;name&quot;: &quot;Chestnuts&quot;,
+                            &quot;points&quot;: 700,
+                            &quot;description&quot;: &quot;Chestnuts that were roasted over an open fire.&quot;
+                        &#125;
+                    &#125;,
+                    &#123;
+                        &quot;name&quot;: &quot;Last Season&#x27;s Clearance&quot;,
+                        &quot;product&quot;: &#123;
+                            &quot;name&quot;: &quot;Pumpkin Seeds&quot;,
+                            &quot;points&quot;: 400,
+                            &quot;description&quot;: &quot;Seeds harvested from a pumpkin.&quot;
+                        &#125;
+                    &#125;
+                ]
+            &#125;
+        ]
+    &#125;
+]
+&quot;&quot;&quot;</code></pre>
+<ul>
+<li>结构体<pre><code class="highlight plaintext">struct GroceryStore:Codable &#123;
+    var name:String
+    var aisles:[Aisles]
+&#125;
+
+struct Aisles:Codable &#123;
+    var name:String
+    var shelves:[Shelves]
+&#125;
+
+struct Shelves:Codable &#123;
+    var name:String
+    var product:Product
+&#125;
+
+struct Product:Codable &#123;
+    var name:String
+    var points:Int
+    var description:String
+&#125;</code></pre></li>
+<li>解码<pre><code class="highlight plaintext">guard let data = json.data(using: .utf8) else &#123; fatalError(&quot;字符串转data失败&quot;) &#125;
+let decoder = try JSONDecoder().decode([GroceryStore].self, from: data)
+print(decoder)</code></pre></li>
+</ul>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><pre><code class="highlight plaintext">struct Product:Codable &#123;
+    var name:String
+    var description:String
+&#125;</code></pre>
+<pre><code class="highlight plaintext">let product = Product(name: &quot;Orange&quot;, description: &quot;A banana grown in Ecuador.&quot;)
+let data = try JSONEncoder().encode(product)
+let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+print(jsonObject)
+// 或者
+let jsonData = try JSONSerialization.data(withJSONObject: [&quot;name&quot;:&quot;Orange&quot;,&quot;description&quot;:&quot;A banana grown in Ecuador.&quot;])
+let jsonObject1 = try JSONSerialization.jsonObject(with: jsonData, options: [])
+print(jsonObject1)</code></pre>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/01/Swift%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -758,7 +992,7 @@ print(age) // 10</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

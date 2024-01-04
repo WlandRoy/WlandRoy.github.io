@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="swift json 编解码 (官方链接)[https:&#x2F;&#x2F;developer.apple.com&#x2F;documentation&#x2F;foundation&#x2F;archives_and_serialization&#x2F;using_json_with_custom_types]  简单的解码 如下一个json格式字符串let json &#x3D; &quot;&quot;&quot; &#123;     &quot;n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift Codable Json解析">
+<meta property="og:url" content="http://example.com/2024/01/04/Swift-Codable-Json%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="Roy blog">
+<meta property="og:description" content="swift json 编解码 (官方链接)[https:&#x2F;&#x2F;developer.apple.com&#x2F;documentation&#x2F;foundation&#x2F;archives_and_serialization&#x2F;using_json_with_custom_types]  简单的解码 如下一个json格式字符串let json &#x3D; &quot;&quot;&quot; &#123;     &quot;n">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-04T13:47:47.000Z">
+<meta property="article:modified_time" content="2024-01-04T13:47:54.672Z">
+<meta property="article:author" content="Roy">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/01/04/Swift-Codable-Json%E8%A7%A3%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Swift Codable Json解析 | Roy blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Roy blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/04/Swift-Codable-Json%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Roy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roy blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Swift Codable Json解析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-01-04 21:47:47 / 修改时间：21:47:54" itemprop="dateCreated datePublished" datetime="2024-01-04T21:47:47+08:00">2024-01-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="swift-json-编解码"><a href="#swift-json-编解码" class="headerlink" title="swift json 编解码"></a>swift json 编解码</h3><blockquote>
+<p>(官方链接)[<a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/foundation/archives_and_serialization/using_json_with_custom_types]">https://developer.apple.com/documentation/foundation/archives_and_serialization/using_json_with_custom_types]</a></p>
+</blockquote>
+<h6 id="简单的解码"><a href="#简单的解码" class="headerlink" title="简单的解码"></a>简单的解码</h6><ul>
+<li>如下一个json格式字符串<pre><code class="highlight plaintext">let json = &quot;&quot;&quot;
+&#123;
+    &quot;name&quot; : &quot;Banana&quot;,
+    &quot;points&quot; : 200,
+&#125;
+&quot;&quot;&quot;</code></pre></li>
+<li>定义结构体<pre><code class="highlight plaintext">struct Product:Codable &#123;
+    var name:String
+    var points:Int
+&#125;</code></pre></li>
+<li>解码<pre><code class="highlight plaintext">guard let data = json.data(using: .utf8) else &#123; fatalError(&quot;字符串转data失败&quot;) &#125;
+let decoder = try JSONDecoder().decode(Product.self, from: data)
+print(decoder) // Product(name: &quot;Banana&quot;, points: 200)</code></pre></li>
+</ul>
+<h6 id="有时候json是一个数组-有的元素对应字段没有如下"><a href="#有时候json是一个数组-有的元素对应字段没有如下" class="headerlink" title="有时候json是一个数组,有的元素对应字段没有如下"></a>有时候json是一个数组,有的元素对应字段没有如下</h6><pre><code class="highlight plaintext">let json = &quot;&quot;&quot;
+[
+    &#123;
+        &quot;name&quot;: &quot;Banana&quot;,
+        &quot;points&quot;: 200,
+        &quot;description&quot;: &quot;A banana grown in Ecuador.&quot;
+    &#125;,
+    &#123;
+        &quot;name&quot;: &quot;Orange&quot;,
+        &quot;points&quot;: 100
+    &#125;
+]
+&quot;&quot;&quot;</code></pre>
+<ul>
+<li>对应结构体<pre><code class="highlight plaintext">struct Product:Codable &#123;
+    var name:String
+    var points:Int
+    var description:String?
+&#125;</code></pre></li>
+<li>解码<pre><code class="highlight plaintext">guard let data = json.data(using: .utf8) else &#123; fatalError(&quot;字符串转data失败&quot;) &#125;
+let decoder = try JSONDecoder().decode([Product].self, from: data)
+
+print(decoder) // [Product(name: &quot;Banana&quot;, points: 200, description: Optional(&quot;A banana grown in Ecuador.&quot;)), Product(name: &quot;Orange&quot;, points: 100, description: nil)]</code></pre></li>
+</ul>
+<h6 id="有时json有字段但是为null"><a href="#有时json有字段但是为null" class="headerlink" title="有时json有字段但是为null"></a>有时json有字段但是为null</h6><pre><code class="highlight plaintext">let json = &quot;&quot;&quot;
+&#123;
+    &quot;name&quot; : null,
+    &quot;points&quot; : null,
+&#125;
+&quot;&quot;&quot;
+
+struct Product:Codable &#123;
+    var name:String?
+    var points:Int?
+&#125;
+
+guard let data = json.data(using: .utf8) else &#123; fatalError(&quot;字符串转data失败&quot;) &#125;
+let decoder = try JSONDecoder().decode(Product.self, from: data)
+print(decoder) // Product(name: nil, points: nil)</code></pre>
+
+<h6 id="有时json的字段我们不需要或者想换一个字段表示这是就需要转换一下了"><a href="#有时json的字段我们不需要或者想换一个字段表示这是就需要转换一下了" class="headerlink" title="有时json的字段我们不需要或者想换一个字段表示这是就需要转换一下了"></a>有时json的字段我们不需要或者想换一个字段表示这是就需要转换一下了</h6><pre><code class="highlight plaintext">let json = &quot;&quot;&quot;
+[
+    &#123;
+        &quot;product_name&quot;: &quot;Bananas&quot;,
+        &quot;product_cost&quot;: 200,
+        &quot;description&quot;: &quot;A banana grown in Ecuador.&quot;
+    &#125;,
+    &#123;
+        &quot;product_name&quot;: &quot;Oranges&quot;,
+        &quot;product_cost&quot;: 100,
+        &quot;description&quot;: &quot;A juicy orange.&quot;
+    &#125;
+]
+&quot;&quot;&quot;</code></pre>
+<ul>
+<li>结构体<blockquote>
+<p>每个声明的字段必须加上哪怕不需要转换 CodingKeys也是固定写死的格式</p>
+</blockquote>
+<pre><code class="highlight plaintext">struct Product:Codable &#123;
+    var productName:String
+    var points:Int
+    var description:String
+    
+    // 每个声明的字段必须加上哪怕不需要转换
+    private enum CodingKeys:String,CodingKey &#123;
+        case productName = &quot;product_name&quot;
+        case points = &quot;product_cost&quot;
+        case description = &quot;description&quot;
+    &#125;
+&#125;</code></pre></li>
+<li>解码<pre><code class="highlight plaintext">guard let data = json.data(using: .utf8) else &#123; fatalError(&quot;字符串转data失败&quot;) &#125;
+let decoder = try JSONDecoder().decode([Product].self, from: data)
+print(decoder)</code></pre></li>
+</ul>
+<h6 id="嵌套类型如下"><a href="#嵌套类型如下" class="headerlink" title="嵌套类型如下"></a>嵌套类型如下</h6><pre><code class="highlight plaintext">let json = &quot;&quot;&quot;
+[
+    &#123;
+        &quot;name&quot;: &quot;Home Town Market&quot;,
+        &quot;aisles&quot;: [
+            &#123;
+                &quot;name&quot;: &quot;Produce&quot;,
+                &quot;shelves&quot;: [
+                    &#123;
+                        &quot;name&quot;: &quot;Discount Produce&quot;,
+                        &quot;product&quot;: &#123;
+                            &quot;name&quot;: &quot;Banana&quot;,
+                            &quot;points&quot;: 200,
+                            &quot;description&quot;: &quot;A banana that&#x27;s perfectly ripe.&quot;
+                        &#125;
+                    &#125;
+                ]
+            &#125;
+        ]
+    &#125;,
+    &#123;
+        &quot;name&quot;: &quot;Big City Market&quot;,
+        &quot;aisles&quot;: [
+            &#123;
+                &quot;name&quot;: &quot;Sale Aisle&quot;,
+                &quot;shelves&quot;: [
+                    &#123;
+                        &quot;name&quot;: &quot;Seasonal Sale&quot;,
+                        &quot;product&quot;: &#123;
+                            &quot;name&quot;: &quot;Chestnuts&quot;,
+                            &quot;points&quot;: 700,
+                            &quot;description&quot;: &quot;Chestnuts that were roasted over an open fire.&quot;
+                        &#125;
+                    &#125;,
+                    &#123;
+                        &quot;name&quot;: &quot;Last Season&#x27;s Clearance&quot;,
+                        &quot;product&quot;: &#123;
+                            &quot;name&quot;: &quot;Pumpkin Seeds&quot;,
+                            &quot;points&quot;: 400,
+                            &quot;description&quot;: &quot;Seeds harvested from a pumpkin.&quot;
+                        &#125;
+                    &#125;
+                ]
+            &#125;
+        ]
+    &#125;
+]
+&quot;&quot;&quot;</code></pre>
+<ul>
+<li>结构体<pre><code class="highlight plaintext">struct GroceryStore:Codable &#123;
+    var name:String
+    var aisles:[Aisles]
+&#125;
+
+struct Aisles:Codable &#123;
+    var name:String
+    var shelves:[Shelves]
+&#125;
+
+struct Shelves:Codable &#123;
+    var name:String
+    var product:Product
+&#125;
+
+struct Product:Codable &#123;
+    var name:String
+    var points:Int
+    var description:String
+&#125;</code></pre></li>
+<li>解码<pre><code class="highlight plaintext">guard let data = json.data(using: .utf8) else &#123; fatalError(&quot;字符串转data失败&quot;) &#125;
+let decoder = try JSONDecoder().decode([GroceryStore].self, from: data)
+print(decoder)</code></pre></li>
+</ul>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><pre><code class="highlight plaintext">struct Product:Codable &#123;
+    var name:String
+    var description:String
+&#125;</code></pre>
+<pre><code class="highlight plaintext">let product = Product(name: &quot;Orange&quot;, description: &quot;A banana grown in Ecuador.&quot;)
+let data = try JSONEncoder().encode(product)
+let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
+print(jsonObject)
+// 或者
+let jsonData = try JSONSerialization.data(withJSONObject: [&quot;name&quot;:&quot;Orange&quot;,&quot;description&quot;:&quot;A banana grown in Ecuador.&quot;])
+let jsonObject1 = try JSONSerialization.jsonObject(with: jsonData, options: [])
+print(jsonObject1)</code></pre>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/01/01/Swift%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86/" rel="prev" title="Swift错误处理">
+      <i class="fa fa-chevron-left"></i> Swift错误处理
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#swift-json-%E7%BC%96%E8%A7%A3%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">swift json 编解码</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E8%A7%A3%E7%A0%81"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">简单的解码</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%89%E6%97%B6%E5%80%99json%E6%98%AF%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84-%E6%9C%89%E7%9A%84%E5%85%83%E7%B4%A0%E5%AF%B9%E5%BA%94%E5%AD%97%E6%AE%B5%E6%B2%A1%E6%9C%89%E5%A6%82%E4%B8%8B"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">有时候json是一个数组,有的元素对应字段没有如下</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%89%E6%97%B6json%E6%9C%89%E5%AD%97%E6%AE%B5%E4%BD%86%E6%98%AF%E4%B8%BAnull"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">有时json有字段但是为null</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%89%E6%97%B6json%E7%9A%84%E5%AD%97%E6%AE%B5%E6%88%91%E4%BB%AC%E4%B8%8D%E9%9C%80%E8%A6%81%E6%88%96%E8%80%85%E6%83%B3%E6%8D%A2%E4%B8%80%E4%B8%AA%E5%AD%97%E6%AE%B5%E8%A1%A8%E7%A4%BA%E8%BF%99%E6%98%AF%E5%B0%B1%E9%9C%80%E8%A6%81%E8%BD%AC%E6%8D%A2%E4%B8%80%E4%B8%8B%E4%BA%86"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">有时json的字段我们不需要或者想换一个字段表示这是就需要转换一下了</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E7%B1%BB%E5%9E%8B%E5%A6%82%E4%B8%8B"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">嵌套类型如下</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">编码</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Roy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Roy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
