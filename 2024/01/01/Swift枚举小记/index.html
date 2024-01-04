@@ -1,75 +1,433 @@
-<html lang="zh-CN"><head><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content=""/><meta name="keyword"/><title>Roy blog
--
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-</title><link rel="icon" href="/img/favicon.ico"/>
-<link rel="stylesheet" href="/css/style.css">
-
-<link rel="stylesheet" href="/css/helpers.css">
-
-<script src="/js/clipboard/clipboard.min.js"></script>
+<link rel="stylesheet" href="/css/main.css">
 
 
-<script src="/js/bootstrap.js"></script>
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script async="async" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><meta name="generator" content="Hexo 7.0.0"></head><body><div class="loading-wrapper" data-loading="data-loading"><div class="loading"><span></span><span></span><span></span></div></div><div class="page" data-filter="data-filter"><div class="head" data-show="data-show"><header class="head-header"><div class="head-author"><a class="head-author-link" href="/">Roy blog</a></div><div class="head-right"><button class="bar-wrap" id="bar-wrap-toggle"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button><div class="head-item"><a class="search-button head-item-link"><span>Search</span>
-<i class="icon icon-search"></i></a></div><div class="head-item"></div></div></header>
-<div class="menubar-head" id="menubar"><ul class="menubar-ul"><li class="menubar-item" data-border="data-border"></li><li class="menubar-item"><i class="icon icon-archive"></i>
-<a class="menubar-link" href="/archives">Archives</a></li></ul><div class="menu-search-box search-button"><div>Search</div>
-<i class="icon icon-search"></i></div></div></div><div class="main" data-page="post"><article class="post" id="post"><header class="post-head"><h1 class="post-title"><a class="title" href="/2024/01/01/Swift%E6%9E%9A%E4%B8%BE%E5%B0%8F%E8%AE%B0/">Swift枚举小记</a></h1></header><div class="post-meta"><div class="post-date"><time class="post-time" itemprop="datePublished" title="2024-01-01 18:48:04" datetime="2024-01-01T10:48:04.000Z">2024-01-01</time></div>|
-<div class="post-tag"></div>|
-<div class="post-visit"><span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span>hits</span></div></div><div class="post-info"><div class="post-word-count">This article contains 344 words.</div>
-</div><div class="article-entry" itemprop="articleBody"><h3 id="常用的枚举"><a href="#常用的枚举" class="headerlink" title="常用的枚举"></a>常用的枚举</h3><ul>
-<li>定义一个方向枚举 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">enum CompassPoint &#123;</span><br><span class="line">    case north</span><br><span class="line">    case south</span><br><span class="line">    case east</span><br><span class="line">    case west</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var direction = CompassPoint.east</span><br><span class="line">switch direction &#123;</span><br><span class="line">case .east:</span><br><span class="line">    print(&quot;东向&quot;)</span><br><span class="line">case .south:</span><br><span class="line">    print(&quot;南向&quot;)</span><br><span class="line">case .north:</span><br><span class="line">    print(&quot;北向&quot;)</span><br><span class="line">case .west:</span><br><span class="line">    print(&quot;西向&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="常用的枚举 定义一个方向枚举 enum CompassPoint &#123;     case north     case south     case east     case west &#125;  var direction &#x3D; CompassPoint.east switch direction &#123; case .east:     print(&quot;东向&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift枚举小记">
+<meta property="og:url" content="http://example.com/2024/01/01/Swift%E6%9E%9A%E4%B8%BE%E5%B0%8F%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Roy blog">
+<meta property="og:description" content="常用的枚举 定义一个方向枚举 enum CompassPoint &#123;     case north     case south     case east     case west &#125;  var direction &#x3D; CompassPoint.east switch direction &#123; case .east:     print(&quot;东向&quot;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-01T10:48:04.000Z">
+<meta property="article:modified_time" content="2024-01-01T10:48:37.879Z">
+<meta property="article:author" content="Roy">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/01/01/Swift%E6%9E%9A%E4%B8%BE%E5%B0%8F%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Swift枚举小记 | Roy blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Roy blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/01/Swift%E6%9E%9A%E4%B8%BE%E5%B0%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Roy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roy blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Swift枚举小记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-01-01 18:48:04 / 修改时间：18:48:37" itemprop="dateCreated datePublished" datetime="2024-01-01T18:48:04+08:00">2024-01-01</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="常用的枚举"><a href="#常用的枚举" class="headerlink" title="常用的枚举"></a>常用的枚举</h3><ul>
+<li>定义一个方向枚举 <pre><code class="highlight plaintext">enum CompassPoint &#123;
+    case north
+    case south
+    case east
+    case west
+&#125;
+
+var direction = CompassPoint.east
+switch direction &#123;
+case .east:
+    print(&quot;东向&quot;)
+case .south:
+    print(&quot;南向&quot;)
+case .north:
+    print(&quot;北向&quot;)
+case .west:
+    print(&quot;西向&quot;)
+&#125;</code></pre></li>
 </ul>
 <h3 id="枚举遵循-CaseIterable协议可以遍历自己的元素"><a href="#枚举遵循-CaseIterable协议可以遍历自己的元素" class="headerlink" title="枚举遵循 CaseIterable协议可以遍历自己的元素"></a>枚举遵循 CaseIterable协议可以遍历自己的元素</h3><ul>
-<li>定义一个饮料枚举 遵循 CaseIterable协议<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enum Beverage:CaseIterable &#123;</span><br><span class="line">    case coffee,tea,juice</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>变量枚举的每个元素 , 打印枚举元素的个数<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for item in Beverage.allCases &#123;</span><br><span class="line">    print(item)</span><br><span class="line">&#125;</span><br><span class="line">print(&quot;\(Beverage.allCases.count) beverages available&quot;)</span><br></pre></td></tr></table></figure></li>
+<li>定义一个饮料枚举 遵循 CaseIterable协议<pre><code class="highlight plaintext">enum Beverage:CaseIterable &#123;
+    case coffee,tea,juice
+&#125;</code></pre></li>
+<li>变量枚举的每个元素 , 打印枚举元素的个数<pre><code class="highlight plaintext">for item in Beverage.allCases &#123;
+    print(item)
+&#125;
+print(&quot;\(Beverage.allCases.count) beverages available&quot;)</code></pre></li>
 </ul>
 <h3 id="原始值"><a href="#原始值" class="headerlink" title="原始值"></a>原始值</h3><ul>
 <li>定义枚举时如果没有指定类型那么其值就是定义的枚举类型否则就是指定类型的值<blockquote>
 <p>如上 CompassPoint 的枚举 定义的 direction 打印的是 east</p>
 </blockquote>
 </li>
-<li>定义枚举类型<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">enum PetType:String &#123;</span><br><span class="line">    case dog = &quot;小狗&quot;</span><br><span class="line">    case cat = &quot;小猫&quot;</span><br><span class="line">&#125;</span><br><span class="line">var pet = PetType.dog</span><br><span class="line">print(pet.rawValue) // 小狗</span><br></pre></td></tr></table></figure></li>
+<li>定义枚举类型<pre><code class="highlight plaintext">enum PetType:String &#123;
+    case dog = &quot;小狗&quot;
+    case cat = &quot;小猫&quot;
+&#125;
+var pet = PetType.dog
+print(pet.rawValue) // 小狗</code></pre></li>
 </ul>
 <h3 id="关联值"><a href="#关联值" class="headerlink" title="关联值"></a>关联值</h3><ul>
-<li>定义一个电子码的枚举 分为条形码和二维码两种类型 条形码是四个整数组合的元组,条形码则是字符串<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">enum Barcode &#123;</span><br><span class="line">    case upc(Int,Int,Int,Int)</span><br><span class="line">    case qrCode(String)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 创建一个条形码的类型</span><br><span class="line">var barCode = Barcode.upc(8, 85909, 51226, 3)</span><br><span class="line">// 二维码</span><br><span class="line">barCode = Barcode.qrCode(&quot;ABCDEKFJSHEHUFHEOP&quot;)</span><br><span class="line"></span><br><span class="line">switch barCode &#123;</span><br><span class="line">case .upc(let num1, let num2, let num3, let num4):</span><br><span class="line">    print(&quot;条形码是\(num1) \(num2) \(num3) \(num4)&quot;)</span><br><span class="line">case .qrCode(let code):</span><br><span class="line">    print(&quot;二维码的内容是: \(code)&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>定义一个电子码的枚举 分为条形码和二维码两种类型 条形码是四个整数组合的元组,条形码则是字符串<pre><code class="highlight plaintext">enum Barcode &#123;
+    case upc(Int,Int,Int,Int)
+    case qrCode(String)
+&#125;
+
+// 创建一个条形码的类型
+var barCode = Barcode.upc(8, 85909, 51226, 3)
+// 二维码
+barCode = Barcode.qrCode(&quot;ABCDEKFJSHEHUFHEOP&quot;)
+
+switch barCode &#123;
+case .upc(let num1, let num2, let num3, let num4):
+    print(&quot;条形码是\(num1) \(num2) \(num3) \(num4)&quot;)
+case .qrCode(let code):
+    print(&quot;二维码的内容是: \(code)&quot;)
+&#125;</code></pre></li>
 </ul>
-</div></article><aside class="post-widget"><h4>In this article</h4><nav class="post-toc-wrap" id="post-toc"><ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%9E%9A%E4%B8%BE"><span class="post-toc-number">1.</span> <span class="post-toc-text">常用的枚举</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%9E%9A%E4%B8%BE%E9%81%B5%E5%BE%AA-CaseIterable%E5%8D%8F%E8%AE%AE%E5%8F%AF%E4%BB%A5%E9%81%8D%E5%8E%86%E8%87%AA%E5%B7%B1%E7%9A%84%E5%85%83%E7%B4%A0"><span class="post-toc-number">2.</span> <span class="post-toc-text">枚举遵循 CaseIterable协议可以遍历自己的元素</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%8E%9F%E5%A7%8B%E5%80%BC"><span class="post-toc-number">3.</span> <span class="post-toc-text">原始值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%85%B3%E8%81%94%E5%80%BC"><span class="post-toc-number">4.</span> <span class="post-toc-text">关联值</span></a></li></ol></nav></aside></div><footer class="footer-nav"><div class="footer"><div class="back-top" id="back-top" title="Back to top"><i class="icon icon-chevron-bar-up"></i></div><div class="footer-content"><div><span id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv">?</span>
-PV
-</span><span id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv">?</span>
-UV</span></div>
 
-Copyright &copy;
-2020<span class="time-divide">-</span>2024
-Roy.
+    </div>
 
-Power by
-<a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>
-and
-<a href="https://github.com/Cerallin/hexo-theme-yuzu" target="_blank" rel="external nofollow" title="v3.2.3">Theme Yuzu</a>.</div></div></footer>
-<script>window.config = {
-  url_root: '/',
-  meta_path: 'meta.json',
-};
-</script>
-<script src="/js/theme/back-to-top.js"></script>
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
 
 
-<script src="/js/theme/clipboard.js"></script>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/01/01/Swift%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93%E5%B0%8F%E8%AE%B0/" rel="prev" title="Swift类和结构体小记">
+      <i class="fa fa-chevron-left"></i> Swift类和结构体小记
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/01/01/Swift%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86/" rel="next" title="Swift错误处理">
+      Swift错误处理 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
 
 
-<script src="/js/theme/loading.js"></script>
 
+          </div>
+          
 
-<script src="/js/theme/navbar.js"></script>
-
-<script src="/js/theme/search.js"></script>
-
-<script src="/js/theme/toc.js"></script>
-<script>window.onload = function () {
-  for (const moduleName in Theme) {
-    const module = Theme[moduleName];
-    module.register();
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
   }
-};</script></div><div class="search-modal" id="search-modal"><div class="card"><div class="card-head"><div class="search-box"><input class="search-input" id="search-input" placeholder="search"/><div class="search-button" id="search-button"><div class="icon icon-search"></div></div></div><div class="close-button"><div class="icon icon-x"></div></div></div><div class="card-body"><div class="search-count">search.total<span id="search-count-num">0</span>search result(s) in total.</div><div class="search-result" id="search-result"></div></div></div></div></body></html>
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%9E%9A%E4%B8%BE"><span class="nav-number">1.</span> <span class="nav-text">常用的枚举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E9%81%B5%E5%BE%AA-CaseIterable%E5%8D%8F%E8%AE%AE%E5%8F%AF%E4%BB%A5%E9%81%8D%E5%8E%86%E8%87%AA%E5%B7%B1%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-number">2.</span> <span class="nav-text">枚举遵循 CaseIterable协议可以遍历自己的元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">原始值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%80%BC"><span class="nav-number">4.</span> <span class="nav-text">关联值</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Roy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Roy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
