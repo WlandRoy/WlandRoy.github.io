@@ -145,6 +145,145 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/12/Swift-%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Roy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Roy blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/12/Swift-%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" class="post-title-link" itemprop="url">Swift 命名空间</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-01-12 18:54:47 / 修改时间：18:55:16" itemprop="dateCreated datePublished" datetime="2024-01-12T18:54:47+08:00">2024-01-12</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>在使用第三方库如kingfisher时会这样 imageView.kf.setImage,其中kf就是区别系统库的方法调用,下面就来学习怎么自己实现</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://medium.com/@thibault.wittemberg/versatile-namespace-in-swift-3e8bbd6b6250">参考链接</a></p>
+<h3 id="以UIBUtton为例"><a href="#以UIBUtton为例" class="headerlink" title="以UIBUtton为例"></a>以UIBUtton为例</h3><ul>
+<li>定义一个 ButtonNameSpace的结构体<pre><code class="highlight plaintext">struct ButtonNameSpace &#123;
+    func hello() &#123;
+        print(&quot;Hello&quot;)
+    &#125;
+&#125;</code></pre>
+<pre><code class="highlight plaintext">extension UIButton &#123;
+    var nameSpace:ButtonNameSpace &#123;
+        return ButtonNameSpace()
+    &#125;
+&#125;</code></pre></li>
+<li>使用<pre><code class="highlight plaintext">let button = UIButton()
+button.nameSpace.hello() // Hello</code></pre></li>
+<li>修改一下 可以访问UIButton的属性<pre><code class="highlight plaintext">struct ButtonNameSpace &#123;
+    private let button:UIButton
+    
+    init(button: UIButton) &#123;
+        self.button = button
+    &#125;
+    
+    func hello() &#123;
+        let title = self.button.title(for: .normal) ?? &quot;&quot;
+        print(&quot;Hello \(title)&quot;)
+    &#125;
+&#125;
+
+extension UIButton &#123;
+    var nameSpace:ButtonNameSpace &#123;
+        return ButtonNameSpace(button: self)
+    &#125;
+&#125;</code></pre>
+<pre><code class="highlight plaintext">let button = UIButton()
+button.setTitle(&quot;My Button&quot;, for: .normal)
+button.nameSpace.hello()</code></pre></li>
+</ul>
+<h3 id="如果想用相似的方式来实现其他类可以先把命名空间的结构体改成泛型"><a href="#如果想用相似的方式来实现其他类可以先把命名空间的结构体改成泛型" class="headerlink" title="如果想用相似的方式来实现其他类可以先把命名空间的结构体改成泛型"></a>如果想用相似的方式来实现其他类可以先把命名空间的结构体改成泛型</h3><ul>
+<li>BaseNameSpace<pre><code class="highlight plaintext">struct BaseNameSpace&lt;Type&gt; &#123;
+    private let base:Type
+    
+    init(base: Type) &#123;
+        self.base = base
+    &#125;
+&#125;</code></pre></li>
+</ul>
+<h6 id="对于UIButton"><a href="#对于UIButton" class="headerlink" title="对于UIButton"></a>对于UIButton</h6><pre><code class="highlight plaintext">extension BaseNameSpace where Type:UIButton &#123;
+    func hello() &#123;
+        let title = self.base.title(for: .normal) ?? &quot;&quot;
+        print(&quot;Hello \(title)&quot;)
+    &#125;
+&#125;
+
+extension UIButton &#123;
+    var nameSpace:BaseNameSpace&lt;UIButton&gt; &#123;
+        return BaseNameSpace(base: self)
+    &#125;
+&#125;</code></pre>
+<ul>
+<li>使用命名空间<pre><code class="highlight plaintext">let button = UIButton()
+button.setTitle(&quot;My Button&quot;, for: .normal)
+button.nameSpace.hello()</code></pre></li>
+</ul>
+<h6 id="对于UIImageView"><a href="#对于UIImageView" class="headerlink" title="对于UIImageView"></a>对于UIImageView</h6><pre><code class="highlight plaintext">extension BaseNameSpace where Type:UIImageView &#123;
+    func hello() &#123;
+        let width = self.base.bounds.size.width
+        print(&quot;Hello \(width)&quot;)
+    &#125;
+&#125;
+
+extension UIImageView &#123;
+    var nameSpace:BaseNameSpace&lt;UIImageView&gt; &#123;
+        return BaseNameSpace(base: self)
+    &#125;
+&#125;</code></pre>
+<ul>
+<li>使用<pre><code class="highlight plaintext">let imgaeView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
+imgaeView.nameSpace.hello() // 100.0</code></pre></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/04/Swift-Codable-Json%E8%A7%A3%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -992,7 +1131,7 @@ print(age) // 10</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

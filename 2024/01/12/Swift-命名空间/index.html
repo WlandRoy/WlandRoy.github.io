@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="常用的枚举 定义一个方向枚举 enum CompassPoint &#123;     case north     case south     case east     case west &#125;  var direction &#x3D; CompassPoint.east switch direction &#123; case .east:     print(&quot;东向&quot;">
+  <meta name="description" content="在使用第三方库如kingfisher时会这样 imageView.kf.setImage,其中kf就是区别系统库的方法调用,下面就来学习怎么自己实现  参考链接 以UIBUtton为例 定义一个 ButtonNameSpace的结构体struct ButtonNameSpace &#123;     func hello() &#123;         print(&quot;Hello&amp;qu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Swift枚举小记">
-<meta property="og:url" content="http://example.com/2024/01/01/Swift%E6%9E%9A%E4%B8%BE%E5%B0%8F%E8%AE%B0/index.html">
+<meta property="og:title" content="Swift 命名空间">
+<meta property="og:url" content="http://example.com/2024/01/12/Swift-%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/index.html">
 <meta property="og:site_name" content="Roy blog">
-<meta property="og:description" content="常用的枚举 定义一个方向枚举 enum CompassPoint &#123;     case north     case south     case east     case west &#125;  var direction &#x3D; CompassPoint.east switch direction &#123; case .east:     print(&quot;东向&quot;">
+<meta property="og:description" content="在使用第三方库如kingfisher时会这样 imageView.kf.setImage,其中kf就是区别系统库的方法调用,下面就来学习怎么自己实现  参考链接 以UIBUtton为例 定义一个 ButtonNameSpace的结构体struct ButtonNameSpace &#123;     func hello() &#123;         print(&quot;Hello&amp;qu">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-01-01T10:48:04.000Z">
-<meta property="article:modified_time" content="2024-01-01T10:48:37.879Z">
+<meta property="article:published_time" content="2024-01-12T10:54:47.000Z">
+<meta property="article:modified_time" content="2024-01-12T10:55:16.794Z">
 <meta property="article:author" content="Roy">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2024/01/01/Swift%E6%9E%9A%E4%B8%BE%E5%B0%8F%E8%AE%B0/">
+<link rel="canonical" href="http://example.com/2024/01/12/Swift-%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Swift枚举小记 | Roy blog</title>
+  <title>Swift 命名空间 | Roy blog</title>
   
 
 
@@ -150,7 +150,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/01/Swift%E6%9E%9A%E4%B8%BE%E5%B0%8F%E8%AE%B0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/01/12/Swift-%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -163,7 +163,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Swift枚举小记
+          Swift 命名空间
         </h1>
 
         <div class="post-meta">
@@ -174,7 +174,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-01-01 18:48:04 / 修改时间：18:48:37" itemprop="dateCreated datePublished" datetime="2024-01-01T18:48:04+08:00">2024-01-01</time>
+              <time title="创建时间：2024-01-12 18:54:47 / 修改时间：18:55:16" itemprop="dateCreated datePublished" datetime="2024-01-12T18:54:47+08:00">2024-01-12</time>
             </span>
 
           
@@ -188,64 +188,86 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="常用的枚举"><a href="#常用的枚举" class="headerlink" title="常用的枚举"></a>常用的枚举</h3><ul>
-<li>定义一个方向枚举 <pre><code class="highlight plaintext">enum CompassPoint &#123;
-    case north
-    case south
-    case east
-    case west
-&#125;
-
-var direction = CompassPoint.east
-switch direction &#123;
-case .east:
-    print(&quot;东向&quot;)
-case .south:
-    print(&quot;南向&quot;)
-case .north:
-    print(&quot;北向&quot;)
-case .west:
-    print(&quot;西向&quot;)
-&#125;</code></pre></li>
-</ul>
-<h3 id="枚举遵循-CaseIterable协议可以遍历自己的元素"><a href="#枚举遵循-CaseIterable协议可以遍历自己的元素" class="headerlink" title="枚举遵循 CaseIterable协议可以遍历自己的元素"></a>枚举遵循 CaseIterable协议可以遍历自己的元素</h3><ul>
-<li>定义一个饮料枚举 遵循 CaseIterable协议<pre><code class="highlight plaintext">enum Beverage:CaseIterable &#123;
-    case coffee,tea,juice
-&#125;</code></pre></li>
-<li>变量枚举的每个元素 , 打印枚举元素的个数<pre><code class="highlight plaintext">for item in Beverage.allCases &#123;
-    print(item)
-&#125;
-print(&quot;\(Beverage.allCases.count) beverages available&quot;)</code></pre></li>
-</ul>
-<h3 id="原始值"><a href="#原始值" class="headerlink" title="原始值"></a>原始值</h3><ul>
-<li>定义枚举时如果没有指定类型那么其值就是定义的枚举类型否则就是指定类型的值<blockquote>
-<p>如上 CompassPoint 的枚举 定义的 direction 打印的是 east</p>
+        <blockquote>
+<p>在使用第三方库如kingfisher时会这样 imageView.kf.setImage,其中kf就是区别系统库的方法调用,下面就来学习怎么自己实现</p>
 </blockquote>
-</li>
-<li>定义枚举类型<pre><code class="highlight plaintext">enum PetType:String &#123;
-    case dog = &quot;小狗&quot;
-    case cat = &quot;小猫&quot;
-&#125;
-var pet = PetType.dog
-print(pet.rawValue) // 小狗</code></pre></li>
-</ul>
-<h3 id="关联值"><a href="#关联值" class="headerlink" title="关联值"></a>关联值</h3><ul>
-<li>定义一个电子码的枚举 分为条形码和二维码两种类型 条形码是四个整数组合的元组,条形码则是字符串<pre><code class="highlight plaintext">enum Barcode &#123;
-    case upc(Int,Int,Int,Int)
-    case qrCode(String)
-&#125;
-
-// 创建一个条形码的类型
-var barCode = Barcode.upc(8, 85909, 51226, 3)
-// 二维码
-barCode = Barcode.qrCode(&quot;ABCDEKFJSHEHUFHEOP&quot;)
-
-switch barCode &#123;
-case .upc(let num1, let num2, let num3, let num4):
-    print(&quot;条形码是\(num1) \(num2) \(num3) \(num4)&quot;)
-case .qrCode(let code):
-    print(&quot;二维码的内容是: \(code)&quot;)
+<p><a target="_blank" rel="noopener" href="https://medium.com/@thibault.wittemberg/versatile-namespace-in-swift-3e8bbd6b6250">参考链接</a></p>
+<h3 id="以UIBUtton为例"><a href="#以UIBUtton为例" class="headerlink" title="以UIBUtton为例"></a>以UIBUtton为例</h3><ul>
+<li>定义一个 ButtonNameSpace的结构体<pre><code class="highlight plaintext">struct ButtonNameSpace &#123;
+    func hello() &#123;
+        print(&quot;Hello&quot;)
+    &#125;
+&#125;</code></pre>
+<pre><code class="highlight plaintext">extension UIButton &#123;
+    var nameSpace:ButtonNameSpace &#123;
+        return ButtonNameSpace()
+    &#125;
 &#125;</code></pre></li>
+<li>使用<pre><code class="highlight plaintext">let button = UIButton()
+button.nameSpace.hello() // Hello</code></pre></li>
+<li>修改一下 可以访问UIButton的属性<pre><code class="highlight plaintext">struct ButtonNameSpace &#123;
+    private let button:UIButton
+    
+    init(button: UIButton) &#123;
+        self.button = button
+    &#125;
+    
+    func hello() &#123;
+        let title = self.button.title(for: .normal) ?? &quot;&quot;
+        print(&quot;Hello \(title)&quot;)
+    &#125;
+&#125;
+
+extension UIButton &#123;
+    var nameSpace:ButtonNameSpace &#123;
+        return ButtonNameSpace(button: self)
+    &#125;
+&#125;</code></pre>
+<pre><code class="highlight plaintext">let button = UIButton()
+button.setTitle(&quot;My Button&quot;, for: .normal)
+button.nameSpace.hello()</code></pre></li>
+</ul>
+<h3 id="如果想用相似的方式来实现其他类可以先把命名空间的结构体改成泛型"><a href="#如果想用相似的方式来实现其他类可以先把命名空间的结构体改成泛型" class="headerlink" title="如果想用相似的方式来实现其他类可以先把命名空间的结构体改成泛型"></a>如果想用相似的方式来实现其他类可以先把命名空间的结构体改成泛型</h3><ul>
+<li>BaseNameSpace<pre><code class="highlight plaintext">struct BaseNameSpace&lt;Type&gt; &#123;
+    private let base:Type
+    
+    init(base: Type) &#123;
+        self.base = base
+    &#125;
+&#125;</code></pre></li>
+</ul>
+<h6 id="对于UIButton"><a href="#对于UIButton" class="headerlink" title="对于UIButton"></a>对于UIButton</h6><pre><code class="highlight plaintext">extension BaseNameSpace where Type:UIButton &#123;
+    func hello() &#123;
+        let title = self.base.title(for: .normal) ?? &quot;&quot;
+        print(&quot;Hello \(title)&quot;)
+    &#125;
+&#125;
+
+extension UIButton &#123;
+    var nameSpace:BaseNameSpace&lt;UIButton&gt; &#123;
+        return BaseNameSpace(base: self)
+    &#125;
+&#125;</code></pre>
+<ul>
+<li>使用命名空间<pre><code class="highlight plaintext">let button = UIButton()
+button.setTitle(&quot;My Button&quot;, for: .normal)
+button.nameSpace.hello()</code></pre></li>
+</ul>
+<h6 id="对于UIImageView"><a href="#对于UIImageView" class="headerlink" title="对于UIImageView"></a>对于UIImageView</h6><pre><code class="highlight plaintext">extension BaseNameSpace where Type:UIImageView &#123;
+    func hello() &#123;
+        let width = self.base.bounds.size.width
+        print(&quot;Hello \(width)&quot;)
+    &#125;
+&#125;
+
+extension UIImageView &#123;
+    var nameSpace:BaseNameSpace&lt;UIImageView&gt; &#123;
+        return BaseNameSpace(base: self)
+    &#125;
+&#125;</code></pre>
+<ul>
+<li>使用<pre><code class="highlight plaintext">let imgaeView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
+imgaeView.nameSpace.hello() // 100.0</code></pre></li>
 </ul>
 
     </div>
@@ -262,13 +284,10 @@ case .qrCode(let code):
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/01/01/Swift%E7%B1%BB%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93%E5%B0%8F%E8%AE%B0/" rel="prev" title="Swift类和结构体小记">
-      <i class="fa fa-chevron-left"></i> Swift类和结构体小记
+    <a href="/2024/01/04/Swift-Codable-Json%E8%A7%A3%E6%9E%90/" rel="prev" title="Swift Codable Json解析">
+      <i class="fa fa-chevron-left"></i> Swift Codable Json解析
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/01/01/Swift%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86/" rel="next" title="Swift错误处理">
-      Swift错误处理 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -327,7 +346,7 @@ case .qrCode(let code):
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%9E%9A%E4%B8%BE"><span class="nav-number">1.</span> <span class="nav-text">常用的枚举</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E9%81%B5%E5%BE%AA-CaseIterable%E5%8D%8F%E8%AE%AE%E5%8F%AF%E4%BB%A5%E9%81%8D%E5%8E%86%E8%87%AA%E5%B7%B1%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-number">2.</span> <span class="nav-text">枚举遵循 CaseIterable协议可以遍历自己的元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">原始值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%80%BC"><span class="nav-number">4.</span> <span class="nav-text">关联值</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5UIBUtton%E4%B8%BA%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">以UIBUtton为例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E6%83%B3%E7%94%A8%E7%9B%B8%E4%BC%BC%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9D%A5%E5%AE%9E%E7%8E%B0%E5%85%B6%E4%BB%96%E7%B1%BB%E5%8F%AF%E4%BB%A5%E5%85%88%E6%8A%8A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E7%9A%84%E7%BB%93%E6%9E%84%E4%BD%93%E6%94%B9%E6%88%90%E6%B3%9B%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">如果想用相似的方式来实现其他类可以先把命名空间的结构体改成泛型</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8EUIButton"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">对于UIButton</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8EUIImageView"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">对于UIImageView</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
